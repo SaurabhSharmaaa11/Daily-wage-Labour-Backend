@@ -11,9 +11,9 @@ router.get("/", async(req,res)=>{
 
 try{
 
-const workers = await Worker.find();
+const Worker = await Worker.find();
 
-res.json(workers);
+res.json(Worker);
 
 }
 
@@ -35,9 +35,9 @@ router.get("/:id", async(req,res)=>{
 
 try{
 
-const worker = await Worker.findById(req.params.id);
+const Worker = await Worker.findById(req.params.id);
 
-res.json(worker);
+res.json(Worker);
 
 }
 

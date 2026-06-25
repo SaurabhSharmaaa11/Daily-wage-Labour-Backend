@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 
-const workerSchema = new mongoose.Schema({
+const WorkerSchema = new mongoose.Schema({
 
 name:{
 type:String,
@@ -48,4 +48,4 @@ required:true
 });
 
 
-module.exports = mongoose.model("Worker",workerSchema);
+module.exports = mongoose.model("Worker",WorkerSchema);
