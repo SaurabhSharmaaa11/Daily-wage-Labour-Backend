@@ -7,7 +7,7 @@ const Worker = require("../models/worker");
 
 // GET ALL WORKERS
 
-router.get("/:id", async(req,res)=>{
+router.get("/", async(req,res)=>{
 
 try{
 
