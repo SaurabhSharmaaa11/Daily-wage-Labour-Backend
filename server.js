@@ -1,54 +1,47 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
- const WorkerRoutes = require("./routes/workerRoutes");
-
+const WorkerRoutes = require("./routes/workerRoutes");
 
 const app = express();
-
 
 app.use(cors());
 app.use(express.json());
 
 
-// MongoDB Connection
-
-mongoose.connect(process.env.MONGO_URI)
-
-.then(()=>{
-
-console.log("MongoDB Connected Successfully");
-
-
-app.listen(process.env.PORT || 5000, ()=>{
-
-console.log("Server running");
-
+// Test route
+app.get("/", (req,res)=>{
+    res.send("Backend Running Successfully");
 });
-
-
-})
-
-.catch((error)=>{
-
-console.log("MongoDB Connection Error");
-console.log(error);
-
-});
-
 
 
 // Routes
-
 app.use("/api/Worker", WorkerRoutes);
 
 
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI)
+.then(()=>{
 
-// Test route
+    console.log("MongoDB Connected Successfully");
 
-app.get("/",(req,res)=>{
+})
+.catch((error)=>{
 
-res.send("Backend Running Successfully");
+    console.log("MongoDB Error:");
+    console.log(error);
 
-});  
+});
+
+
+// IMPORTANT FOR RENDER
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, ()=>{
+
+    console.log(`Server running on port ${PORT}`);
+
+});
