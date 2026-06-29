@@ -1,39 +1,11 @@
-    const express = require("express");
+const express = require("express");
 
-    const router = express.Router();
+const router = express.Router();
 
-    const Worker = require("../models/worker");
-
-
-    // GET ALL WORKERS
-
-    router.get("/:id", async(req,res)=>{
-
-    try{
-
-    const worker = await Worker.findById(req.params.id);
-
-    res.json(worker);
-
-    }
-
-    catch(error){
-
-    res.status(500).json({
-    error:error.message
-    });
-
-    }
-
-    });
+const Worker = require("../models/worker");
 
 
-
-    // GET SINGLE WORKER
-
-    // GET ALL WORKERS
-
-  // GET ALL WORKERS
+// GET ALL WORKERS
 
 router.get("/", async(req,res)=>{
 
@@ -57,77 +29,83 @@ error:error.message
 
 
 
-    // DELETE WORKER
+// GET SINGLE WORKER
 
-    router.delete("/:id", async(req,res)=>{
+router.get("/:id", async(req,res)=>{
 
-    try{
+try{
 
-    await Worker.findByIdAndDelete(req.params.id);
+const worker = await Worker.findById(req.params.id);
 
+res.json(worker);
 
-    res.json({
+}
 
-    message:"Worker Deleted Successfully"
+catch(error){
 
-    });
+res.status(500).json({
+error:error.message
+});
 
+}
 
-    }
-
-    catch(error){
-
-    res.status(500).json({
-
-    error:error.message
-
-    });
-
-    }
-
-    });
+});
 
 
 
-    // UPDATE WORKER
+// DELETE WORKER
 
-    router.put("/:id", async(req,res)=>{
+router.delete("/:id", async(req,res)=>{
 
-    try{
+try{
 
+await Worker.findByIdAndDelete(req.params.id);
 
-    const updatedWorker = await Worker.findByIdAndUpdate(
+res.json({
+message:"Worker Deleted Successfully"
+});
 
-    req.params.id,
+}
 
-    req.body,
+catch(error){
 
-    {
-    new:true
-    }
+res.status(500).json({
+error:error.message
+});
 
-    );
+}
 
-
-    res.json(updatedWorker);
-
-
-    }
-
-    catch(error){
-
-
-    res.status(500).json({
-
-    error:error.message
-
-    });
-
-
-    }
-
-    });
+});
 
 
 
-    module.exports = router; 
+// UPDATE WORKER
+
+router.put("/:id", async(req,res)=>{
+
+try{
+
+const updatedWorker = await Worker.findByIdAndUpdate(
+req.params.id,
+req.body,
+{
+new:true
+}
+);
+
+res.json(updatedWorker);
+
+}
+
+catch(error){
+
+res.status(500).json({
+error:error.message
+});
+
+}
+
+});
+
+
+module.exports = router;
