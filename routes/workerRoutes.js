@@ -5,19 +5,8 @@ const router = express.Router();
 const Worker = require("../models/worker");
 
 
-// TEST ROUTE
-
-router.get("/test", (req,res)=>{
-
-    res.send("Worker route working");
-
-});
-
-
-
 // GET ALL WORKERS
-
-router.get("/", async(req,res)=>{
+router.get("/", async (req,res)=>{
 
     try{
 
@@ -26,7 +15,6 @@ router.get("/", async(req,res)=>{
         res.json(workers);
 
     }
-
     catch(error){
 
         res.status(500).json({
@@ -36,8 +24,6 @@ router.get("/", async(req,res)=>{
     }
 
 });
-
-
 
 
 // GET SINGLE WORKER
@@ -51,7 +37,6 @@ router.get("/:id", async(req,res)=>{
         res.json(worker);
 
     }
-
     catch(error){
 
         res.status(500).json({
@@ -61,35 +46,6 @@ router.get("/:id", async(req,res)=>{
     }
 
 });
-
-
-
-
-// CREATE WORKER
-
-router.post("/", async(req,res)=>{
-
-    try{
-
-        const worker = new Worker(req.body);
-
-        const savedWorker = await worker.save();
-
-        res.json(savedWorker);
-
-    }
-
-    catch(error){
-
-        res.status(500).json({
-            error:error.message
-        });
-
-    }
-
-});
-
-
 
 
 // DELETE WORKER
@@ -100,27 +56,22 @@ router.delete("/:id", async(req,res)=>{
 
         await Worker.findByIdAndDelete(req.params.id);
 
+
         res.json({
-
             message:"Worker Deleted Successfully"
-
         });
 
-    }
 
+    }
     catch(error){
 
         res.status(500).json({
-
             error:error.message
-
         });
 
     }
 
 });
-
-
 
 
 // UPDATE WORKER
@@ -147,21 +98,15 @@ router.put("/:id", async(req,res)=>{
 
 
     }
-
     catch(error){
 
-
         res.status(500).json({
-
             error:error.message
-
         });
-
 
     }
 
 });
-
 
 
 module.exports = router;
