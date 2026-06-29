@@ -5,27 +5,38 @@ const router = express.Router();
 const Worker = require("../models/worker");
 
 
+// TEST ROUTE
+
+router.get("/test", (req,res)=>{
+
+    res.send("Worker route working");
+
+});
+
+
+
 // GET ALL WORKERS
 
 router.get("/", async(req,res)=>{
 
-try{
+    try{
 
-const workers = await Worker.find();
+        const workers = await Worker.find();
 
-res.json(workers);
+        res.json(workers);
 
-}
+    }
 
-catch(error){
+    catch(error){
 
-res.status(500).json({
-error:error.message
+        res.status(500).json({
+            error:error.message
+        });
+
+    }
+
 });
 
-}
-
-});
 
 
 
@@ -33,23 +44,51 @@ error:error.message
 
 router.get("/:id", async(req,res)=>{
 
-try{
+    try{
 
-const worker = await Worker.findById(req.params.id);
+        const worker = await Worker.findById(req.params.id);
 
-res.json(worker);
+        res.json(worker);
 
-}
+    }
 
-catch(error){
+    catch(error){
 
-res.status(500).json({
-error:error.message
+        res.status(500).json({
+            error:error.message
+        });
+
+    }
+
 });
 
-}
+
+
+
+// CREATE WORKER
+
+router.post("/", async(req,res)=>{
+
+    try{
+
+        const worker = new Worker(req.body);
+
+        const savedWorker = await worker.save();
+
+        res.json(savedWorker);
+
+    }
+
+    catch(error){
+
+        res.status(500).json({
+            error:error.message
+        });
+
+    }
 
 });
+
 
 
 
@@ -57,25 +96,30 @@ error:error.message
 
 router.delete("/:id", async(req,res)=>{
 
-try{
+    try{
 
-await Worker.findByIdAndDelete(req.params.id);
+        await Worker.findByIdAndDelete(req.params.id);
 
-res.json({
-message:"Worker Deleted Successfully"
+        res.json({
+
+            message:"Worker Deleted Successfully"
+
+        });
+
+    }
+
+    catch(error){
+
+        res.status(500).json({
+
+            error:error.message
+
+        });
+
+    }
+
 });
 
-}
-
-catch(error){
-
-res.status(500).json({
-error:error.message
-});
-
-}
-
-});
 
 
 
@@ -83,29 +127,41 @@ error:error.message
 
 router.put("/:id", async(req,res)=>{
 
-try{
+    try{
 
-const updatedWorker = await Worker.findByIdAndUpdate(
-req.params.id,
-req.body,
-{
-new:true
-}
-);
 
-res.json(updatedWorker);
+        const updatedWorker = await Worker.findByIdAndUpdate(
 
-}
+            req.params.id,
 
-catch(error){
+            req.body,
 
-res.status(500).json({
-error:error.message
+            {
+                new:true
+            }
+
+        );
+
+
+        res.json(updatedWorker);
+
+
+    }
+
+    catch(error){
+
+
+        res.status(500).json({
+
+            error:error.message
+
+        });
+
+
+    }
+
 });
 
-}
-
-});
 
 
 module.exports = router;
