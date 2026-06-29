@@ -31,7 +31,7 @@ app.get("/",(req,res)=>{
 
 
 
-
+console.log("MONGO CHECK:", process.env.MONGO_URI);
 // Start server after MongoDB connection
 
 mongoose.connect(process.env.MONGO_URI)
