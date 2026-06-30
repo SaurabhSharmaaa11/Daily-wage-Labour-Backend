@@ -1,4 +1,4 @@
-require("dotenv").config();
+ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
@@ -15,48 +15,48 @@ app.use(express.json());
 
 
 
-// Routes
-
-app.use("/api/Worker", WorkerRoutes);
-
-
-
-// Test
-
 app.get("/",(req,res)=>{
 
-    res.send("Backend Running Successfully");
+res.send("Backend Running Successfully");
 
 });
 
 
 
-console.log("MONGO CHECK:", process.env.MONGO_URI);
-// Start server after MongoDB connection
+app.use("/api/Worker",WorkerRoutes);
+
+
+
+console.log("MONGO CHECK:",process.env.MONGO_URI);
+
+
 
 mongoose.connect(process.env.MONGO_URI)
 
 .then(()=>{
 
-    console.log("MongoDB Connected Successfully");
+
+console.log("MongoDB Connected Successfully");
 
 
-    const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
 
-    app.listen(PORT,()=>{
+app.listen(PORT,()=>{
 
-        console.log(`Server running on port ${PORT}`);
+console.log("Server running on port",PORT);
 
-    });
+});
 
 
 })
 
-
 .catch((error)=>{
 
-    console.log("MongoDB Connection Error");
-    console.log(error);
+
+console.log("MongoDB ERROR");
+
+console.log(error);
+
 
 });
