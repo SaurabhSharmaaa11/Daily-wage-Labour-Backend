@@ -5,108 +5,219 @@ const router = express.Router();
 const Worker = require("../models/worker");
 
 
-// GET ALL WORKERS
-router.get("/", async (req,res)=>{
 
-    try{
+// ===============================
+// CREATE WORKER (POST)
+// ===============================
 
-        const workers = await Worker.find();
+router.post("/", async(req,res)=>{
 
-        res.json(workers);
+try{
 
-    }
-    catch(error){
 
-        res.status(500).json({
-            error:error.message
-        });
+const worker = new Worker(req.body);
 
-    }
+
+const savedWorker = await worker.save();
+
+
+res.status(201).json(savedWorker);
+
+
+}
+catch(error){
+
+
+res.status(500).json({
+
+error:error.message
 
 });
 
 
+}
+
+});
+
+
+
+
+
+// ===============================
+// GET ALL WORKERS
+// ===============================
+
+
+router.get("/", async(req,res)=>{
+
+
+try{
+
+
+const workers = await Worker.find();
+
+
+res.json(workers);
+
+
+
+}
+catch(error){
+
+
+res.status(500).json({
+
+error:error.message
+
+});
+
+
+}
+
+
+});
+
+
+
+
+
+
+// ===============================
 // GET SINGLE WORKER
+// ===============================
+
 
 router.get("/:id", async(req,res)=>{
 
-    try{
 
-        const worker = await Worker.findById(req.params.id);
+try{
 
-        res.json(worker);
 
-    }
-    catch(error){
+const worker = await Worker.findById(req.params.id);
 
-        res.status(500).json({
-            error:error.message
-        });
 
-    }
+
+res.json(worker);
+
+
+
+}
+catch(error){
+
+
+res.status(500).json({
+
+error:error.message
 
 });
 
 
+}
+
+
+});
+
+
+
+
+
+
+// ===============================
 // DELETE WORKER
+// ===============================
+
 
 router.delete("/:id", async(req,res)=>{
 
-    try{
 
-        await Worker.findByIdAndDelete(req.params.id);
-
-
-        res.json({
-            message:"Worker Deleted Successfully"
-        });
+try{
 
 
-    }
-    catch(error){
+await Worker.findByIdAndDelete(req.params.id);
 
-        res.status(500).json({
-            error:error.message
-        });
 
-    }
+
+res.json({
+
+message:"Worker Deleted Successfully"
 
 });
 
 
+
+}
+catch(error){
+
+
+res.status(500).json({
+
+error:error.message
+
+});
+
+
+}
+
+
+});
+
+
+
+
+
+
+
+// ===============================
 // UPDATE WORKER
+// ===============================
+
 
 router.put("/:id", async(req,res)=>{
 
-    try{
+
+try{
 
 
-        const updatedWorker = await Worker.findByIdAndUpdate(
-
-            req.params.id,
-
-            req.body,
-
-            {
-                new:true
-            }
-
-        );
+const updatedWorker = await Worker.findByIdAndUpdate(
 
 
-        res.json(updatedWorker);
+req.params.id,
 
 
-    }
-    catch(error){
+req.body,
 
-        res.status(500).json({
-            error:error.message
-        });
 
-    }
+{
+new:true
+}
+
+
+);
+
+
+
+res.json(updatedWorker);
+
+
+
+}
+catch(error){
+
+
+res.status(500).json({
+
+error:error.message
 
 });
+
+
+}
+
+
+});
+
+
+
 
 
 module.exports = router;

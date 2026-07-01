@@ -1,0 +1,14 @@
+const mongoose = require("mongoose");
+
+mongoose.connect(
+"mongodb://Saurabh:Saurabh9639@ac-snwqrh1-shard-00-00.rsucllf.mongodb.net:27017,ac-snwqrh1-shard-00-01.rsucllf.mongodb.net:27017,ac-snwqrh1-shard-00-02.rsucllf.mongodb.net:27017/?ssl=true&replicaSet=atlas-5klect-shard-0&authSource=admin&appName=Cluster0"
+)
+.then(()=>{
+    console.log("CONNECTED");
+    process.exit();
+})
+.catch(err=>{
+    console.log("FAILED");
+    console.log(err);
+    process.exit();
+});
