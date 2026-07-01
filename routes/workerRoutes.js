@@ -10,9 +10,11 @@ const Worker = require("../models/worker");
 // CREATE WORKER (POST)
 // ===============================
 
-router.post("/", async(req,res)=>{
+ router.post("/", async(req,res)=>{
 
 try{
+
+console.log("REQUEST BODY:", req.body);
 
 
 const worker = new Worker(req.body);
@@ -21,11 +23,18 @@ const worker = new Worker(req.body);
 const savedWorker = await worker.save();
 
 
+console.log("WORKER SAVED:", savedWorker);
+
+
 res.status(201).json(savedWorker);
 
 
 }
 catch(error){
+
+
+console.log("CREATE WORKER ERROR:", error.message);
+
 
 
 res.status(500).json({
@@ -38,7 +47,6 @@ error:error.message
 }
 
 });
-
 
 
 
